@@ -1,0 +1,68 @@
+
+<div class="container">
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+            <div class="col-lg-6">
+              <div class="image2 "></div>
+              <div class="p-2 distance">
+                <div class="text-center distance">
+                  <h1 class="h4 text-gray-900 mb-4">Bienvenue sur AgriStats!</h1>
+                </div>
+                <form #loginform="ngForm" class="user" (ngSubmit)="loginUser()" >
+                  <div class="form-group">
+                    <input type="email" class="form-control form-control-user  btn-user"
+                           name="username" aria-describedby="emailHelp"
+                           placeholder="Adresse e-mail"
+                           [(ngModel)]="user.username" required #username="ngModel"
+                           [class.is-invalid]="username.invalid && username.touched"
+                    >
+                    <small class="text-danger" [class.d-none]="username.valid || username.untouched">
+
+                    </small>
+
+                  </div>
+                  <div class="form-group" >
+
+                    <input type="password" class="form-control form-control-user btn-user"
+                           name="password" placeholder="Mot de passe"
+                           [(ngModel)]="user.password"
+                           [(ngModel)]="user.password" required #password="ngModel"
+                           [class.is-invalid]="password.invalid && password.touched"
+                    >
+
+
+                  </div>
+                  <input [disabled]="loginform.form.invalid" type="submit" class="btn btn-primary btn-user btn-block"  value=" Connectez-vous">
+
+                  <small class="text-danger size">
+                    {{msg}}
+                  </small>
+                </form>
+                <hr>
+                <div class="text-center">
+                  <a  routerLink="/fg-password">Mot de passe oublié?</a>
+                </div>
+                <div class="text-center">
+                  <a  routerLink="/register">Créer un compte!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
