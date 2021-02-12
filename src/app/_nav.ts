@@ -242,8 +242,8 @@ export const navItems: INavData[] = [
     attributes: { target: '_blank', rel: 'noopener' }
   },
   {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
+    name: 'Se deconnecter',
+    url: '',
     icon: 'icon-layers',
     variant: 'danger',
     attributes: { target: '_blank', rel: 'noopener' }

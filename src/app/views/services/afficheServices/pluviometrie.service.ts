@@ -12,7 +12,7 @@ export class PluviometrieService {
   pluviometrie(): Observable<any> {
     const body = new HttpParams()
 
-    return this.http.get('http://192.168.137.88:8080/pluviometrie/all'
+    return this.http.get('http://localhost:8080/pluviometrie/all?region=Mé&annee=2006'
     );
   }
 

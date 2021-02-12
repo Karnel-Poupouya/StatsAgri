@@ -18,7 +18,7 @@ export class FgPasswordService {
     const body = new HttpParams()
       .set('username', username);
 
-    return this.http.post('http://192.168.137.88:8080/passreset',
+    return this.http.post('http://localhost:8080/passreset',
       body.toString(),
       {
         headers: new HttpHeaders()

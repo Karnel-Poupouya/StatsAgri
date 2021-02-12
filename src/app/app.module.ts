@@ -45,7 +45,8 @@ import { ChartsModule } from 'ng2-charts';
 import { ResetComponent } from './views/reset/reset.component';
 import { FgPasswordComponent } from './views/fg-password/fg-password.component';
 import {HttpClientModule} from "@angular/common/http";
-import { PluviometrieComponent } from './views/pluviometrie/pluviometrie.component';
+import { CacaoComponent } from './affiches/rentes/cacao/cacao.component';
+import { CafeComponent } from './affiches/rentes/cafe/cafe.component';
 
 @NgModule({
   imports: [

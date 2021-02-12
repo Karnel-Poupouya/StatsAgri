@@ -15,7 +15,7 @@ export class LoginService {
 
 
   getAll() {
-    return this.http.get<User[]>('http://192.168.137.88:8080/login');
+    return this.http.get<User[]>('http://localhost:8080/login');
   }
   user:any
 
@@ -36,13 +36,11 @@ export class LoginService {
        this.currentUserSubject.next(user);
        return user;
      })); */
-    return this.http.post<any>('http://192.168.137.88:8080/login',  body.toString(),
+    return this.http.post<any>('http://localhost:8080/login',  body.toString(),
       {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
       })
 
   }
-
-
 }

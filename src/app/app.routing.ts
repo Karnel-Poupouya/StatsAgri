@@ -14,7 +14,7 @@ import {ResetComponent} from "./views/reset/reset.component";
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -96,6 +96,10 @@ export const routes: Routes = [
       {
         path: 'theme',
         loadChildren: () => import('./views/theme/theme.module').then(m => m.ThemeModule)
+      },
+      {
+        path: 'cacao',
+        loadChildren: () => import('./affiches/rentes/rentes/rentes.module').then(m => m.RentesModule)
       },
       {
         path: 'widgets',

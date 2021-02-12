@@ -15,7 +15,7 @@ export class ResetService {
     const body = new HttpParams()
       .set('password', password)
       .set('token', token)
-    return this.http.post('http://192.168.137.88:8080/reset',
+    return this.http.post('http://localhost:8080/reset',
       body.toString(),
       {
         headers: new HttpHeaders()

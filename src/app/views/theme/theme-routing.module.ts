@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ColorsComponent } from './colors.component';
 import { TypographyComponent } from './typography.component';
+import {PluvioComponent} from "./pluvio/pluvio.component";
+
 
 const routes: Routes = [
   {
@@ -22,6 +24,15 @@ const routes: Routes = [
           title: 'Colors'
         }
       },
+
+      {
+        path: 'pluvio',
+        component: PluvioComponent,
+        data: {
+          title: 'pluvio'
+        }
+      },
+
       {
         path: 'typography',
         component: TypographyComponent,

@@ -22,7 +22,7 @@ export class RegisterService {
       .set('nom', nom)
       .set('prenom', prenom);
 
-    return this.http.post('http://192.168.137.88:8080/register',
+    return this.http.post('http://localhost:8080/register',
       body.toString(),
       {
         headers: new HttpHeaders()
