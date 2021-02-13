@@ -16,6 +16,7 @@ export class ColorsComponent implements OnInit {
 
   }
 
+
 //variables
 
   msg:any
@@ -23,6 +24,8 @@ export class ColorsComponent implements OnInit {
   pluies:any
   p_select:any="Mé"
   p1_select:any=2006
+ms:any
+  columns: string[] = [];
 
   ngOnInit(): void {
     this.div1=false;
@@ -40,17 +43,29 @@ export class ColorsComponent implements OnInit {
     );
   }
 
+
 //---------------------------------------------------------------------------------------------
+
+
+
   onGetPluivio(){
   this.div1=true;
   this.pluviometrie()
     .pipe(first()).subscribe(
     data=>{
       // console.log("reponse recu",data)
+      for ( let i=0;i<data.data.length;i++)
+      {
+        this.barChartLabels[i]=data.data[i].localite.libelle
+        this.barChartData[0].data[i]=data.data[i].hauteurPluieAnnuelle
+        this.barChartData[1].data[i]=data.data[i].nbJourPluie
+      }
+
       this.pluies=data
       if (this.pluies!=null)
       {
         console.log("reponse recu",this.pluies)
+
       }else
       {
         console.log("pas de reponse",this.pluies)
@@ -63,6 +78,42 @@ export class ColorsComponent implements OnInit {
     }
   )
 }
+
+  // barChart
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels: string[] = ['AGOU', 'ADZOPE', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType = 'bar';
+  public barChartLegend = true;
+
+  public barChartData: any[] = [
+    {data: [65, 59, 80, 81, 56, 55,51, 40], label: 'Hauteur annuelle de pluie (mm)'},
+    {data: [28, 48, 40, 19, 86, 27, 25, 90], label: 'Nombre de jour de pluie /an (jours)'}
+  ];
+
+
+
+  // events
+  public chartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+    console.log(e);
+  }
+
+
+
+
+
+
+
+
+
+
+
  /* public pluvio(){
     this.service.pluviometrie()
       .pipe(first()).subscribe(
@@ -85,4 +136,6 @@ export class ColorsComponent implements OnInit {
     )
   }
 */
+
+
 }

@@ -9,12 +9,14 @@ import { TypographyComponent } from './typography.component';
 import { ThemeRoutingModule } from './theme-routing.module';
 import { PluvioComponent } from './pluvio/pluvio.component';
 import {FormsModule} from "@angular/forms";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ThemeRoutingModule
+    ThemeRoutingModule,
+    ChartsModule
   ],
   declarations: [
   ColorsComponent,

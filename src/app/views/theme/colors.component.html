@@ -4,6 +4,7 @@
       <strong> Récherchez les statistiques pluviometriques d'une region en fonction de l'année.</strong>
     </div>
     <div>
+
     <div class="card-body" >
       <div class="btn-group" dropdown>
       <label for="cars">Région:&nbsp; &nbsp; </label>
@@ -28,6 +29,7 @@
           </select>
 
       </div>
+
 
       <div class="btn-group" dropdown>
         <label for="cars">&nbsp; &nbsp; &nbsp; Année:&nbsp;&nbsp;  </label>
@@ -77,14 +79,35 @@
         <tbody align="center">
         <tr *ngFor="let p of pluies.data">
           <td>{{p.annee.libelle}} </td>
-          <th class="i1">{{p.localite.libelle}}</th>
+          <td class="i1">{{p.localite.libelle}}</td>
           <td>{{p.hauteurPluieAnnuelle}}</td>
           <td>{{p.nbJourPluie}}</td>
+
         </tr>
+
         </tbody>
       </table>
 
       <p align="right">Source: SODEXAM</p>
     </div>
 
+  </div>
+
+
+  <div class="card" *ngIf="div1">
+    <div class="card-header">
+     Statistiques pluiviometriques de l'année {{p1_select}} pour chaque localite de la region {{p_select}}
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper"*ngIf="pluies">
+        <canvas baseChart class="chart"
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
   </div>
