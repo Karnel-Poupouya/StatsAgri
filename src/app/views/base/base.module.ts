@@ -47,6 +47,7 @@ import { NavbarsComponent } from './navbars/navbars.component';
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -60,7 +61,9 @@ import { BaseRoutingModule } from './base-routing.module';
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    FormsModule,
+    ChartsModule,
   ],
   declarations: [
     CardsComponent,

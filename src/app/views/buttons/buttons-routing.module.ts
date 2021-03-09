@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ButtonsComponent } from './buttons.component';
 import { DropdownsComponent } from './dropdowns.component';
 import { BrandButtonsComponent } from './brand-buttons.component';
+import {MilComponent} from './mil/mil.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
           title: 'Buttons'
         }
       },
+
       {
         path: 'dropdowns',
         component: DropdownsComponent,
@@ -35,6 +37,13 @@ const routes: Routes = [
         component: BrandButtonsComponent,
         data: {
           title: 'Brand buttons'
+        }
+      },
+      {
+        path: 'Mil',
+        component: MilComponent,
+        data: {
+          title: 'mil'
         }
       }
     ]

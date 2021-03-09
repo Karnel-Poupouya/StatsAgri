@@ -35,7 +35,11 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "chart.js",
-              "classnames"
+              "classnames",
+              "core-js",
+              "raf",
+              "xlsx",
+              "@babel/runtime-corejs3"
             ]
           },
           "configurations": {
@@ -87,7 +91,9 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "scripts": [
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+            ],
             "styles": [
               "node_modules/@coreui/icons/css/free.css",
               "node_modules/flag-icon-css/css/flag-icon.css",

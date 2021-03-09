@@ -11,6 +11,8 @@ import { DropdownsComponent } from './dropdowns.component';
 
 // Buttons Routing
 import { ButtonsRoutingModule } from './buttons-routing.module';
+import { MaisComponent } from './mais/mais.component';
+import { MilComponent } from './mil/mil.component';
 
 // Angular
 
@@ -24,7 +26,9 @@ import { ButtonsRoutingModule } from './buttons-routing.module';
   declarations: [
     ButtonsComponent,
     DropdownsComponent,
-    BrandButtonsComponent
+    BrandButtonsComponent,
+    MaisComponent,
+    MilComponent
   ]
 })
 export class ButtonsModule { }

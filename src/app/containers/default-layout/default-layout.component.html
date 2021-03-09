@@ -41,15 +41,12 @@
 <div class="app-body">
   <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
-
   </app-sidebar>
   <!-- Main content -->
   <main class="main">
     <!-- Breadcrumb -->
     <!-- breaking change 'cui-breadcrumb' -->
-    <cui-breadcrumb>
-    </cui-breadcrumb>
-
+   <div class="esp"></div>
     <!-- deprecation warning for 'app-breadcrumb' -->
     <!--<ol class="breadcrumb">-->
     <!--<app-breadcrumb></app-breadcrumb>-->
@@ -319,5 +316,5 @@
   </app-aside>-->
 </div>
 <app-footer>
- <span>Direction des Statistiques, de la Documentation et de l'Informatique &copy; 2021 DSDI.</span>
+ <span> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Direction des Statistiques, de la Documentation et de l'Informatique.  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &copy; 2021 DSDI.</span>
 </app-footer>

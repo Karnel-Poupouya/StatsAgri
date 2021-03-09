@@ -1,12 +1,61 @@
+
 <div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header tailheder">
+      Recherchez des statistiques de la filiere cacao en fonction d'une année
+    </div>
+    <div class="card-body">
+      <p class="ctr">
+        Année :&nbsp; &nbsp;<select  [(ngModel)]="select2" id="cr11" name="ctr1" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option value="1990">1990</option>
+        <option value="1991">1991</option>
+        <option value="1992">1992</option>
+        <option value="1993">1993</option>
+        <option value="1994">1994</option>
+        <option value="1995">1995</option>
+        <option value="1996">1996</option>
+        <option value="1997">1997</option>
+        <option value="1998">1998</option>
+        <option value="1999">1999</option>
+        <option value="2000">2000</option>
+        <option value="2001">2001</option>
+        <option value="2002">2002</option>
+        <option value="2003">2003</option>
+        <option value="2004">2004</option>
+        <option value="2005">2005</option>
+        <option value="2006">2006</option>
+        <option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+        <option value="2010">2010</option>
+        <option value="2011">2011</option>
+        <option value="2012">2012</option>
+        <option value="2013">2013</option>
+        <option value="2014">2014</option>
+        <option value="2015">2015</option>
+        <option value="2016">2016</option>
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+
+      </select>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button"  (click)="CacaoFun()" class="btn btn-primary width1">R E C H E R C H E Z
+        </button>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+ <b class="tail ctr">STATISTIQUES DE LA FILIERE CACAO POUR L'ANNEE {{select2}} </b><div class="btn-group" dropdown>
+
+</div><br/><br/>
   <div class="row">
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-info">
         <div class="card-body pb-0">
-          <button type="button" class="btn btn-transparent p-0 float-right">
-            <i class="icon-location-pin"></i>
-          </button>
-          <div class="text-value">17.503</div>
+          <div class="text-value">{{cacaoSuperficie}}</div>
           <div>Superficies (Ha)</div>
         </div>
         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
@@ -23,18 +72,7 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-primary">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-          <div class="text-value">25.823</div>
+          <div class="text-value">{{cacaoProduction}}</div>
           <div>Productions (Tonnes)</div>
         </div>
         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
@@ -51,17 +89,7 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-warning">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-          <div class="text-value">19.823</div>
+          <div class="text-value">{{cacaoExportation}}</div>
           <div>Exportations (Tonnes)</div>
         </div>
         <div class="chart-wrapper mt-3" style="height:70px;">
@@ -78,17 +106,7 @@
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-danger">
         <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-          <div class="text-value">1.000</div>
+          <div class="text-value">{{cacaoPrix}}</div>
           <div>Prix annuel (F.cfa/Kg)</div>
         </div>
         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
@@ -103,19 +121,67 @@
       </div>
     </div><!--/.col-->
   </div><!--/.row-->
+
+  <div class="taillien">&nbsp;<button type="button" class="btn btn-success "  (click)="Affiche()">Voir les  details pour l'année {{select2}}</button></div><br/>
+
+  <div class="card" *ngIf="div2" >
+    <div class="card-header taillien">
+      Statistiques globales de la filiere Cacao au niveau nationale pour l'année <strong>{{select2}} </strong>
+    </div>
+    <div class="card-body" >
+      <table *ngIf="cacao1" class="table table-bordered">
+        <thead align="center">
+        <tr align="center">
+          <th>ANNEE</th>
+          <th  width="20%" align="center">TYPE PRODUIT</th>
+          <th >PRODUIT</th>
+          <th >SUPERFICIES (Ha)</th>
+          <th>PRODUCTIONS (Tonnes)</th>
+          <th>EXPORTATIONS (Tonnes)</th>
+          <th>PRIX PRODUCTEURS (F CFA/KG)</th>
+          <th>PRIX EXPORTATION (F CFA/KG)</th>
+        </tr>
+        </thead>
+        <tbody align="center">
+        <tr >
+          <td>{{cacaoAnnee}} </td>
+          <td class="i1">{{cacaoTypeproduit}}</td>
+          <td>{{cacaoprduit}}</td>
+          <td>{{cacaoSuperficie}}</td>
+
+          <td>{{cacaoProduction}}</td>
+          <td>{{cacaoExportation}}</td>
+          <td>{{cacaoPrix}}</td>
+          <td>{{cacaoPrixex}}</td>
+        </tr>
+        </tbody>
+
+      </table>
+
+      <p align="right">Source: DSDI</p>
+    </div>
+
+    <div class="ctr"  *ngIf="div2">
+      &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+      <i class="icon-cloud-download">  Telecharger PDF</i></button>
+      <br/><br/>
+    </div>
+  </div>
+
+
   <div class="card">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-5">
-          <h4 class="card-title mb-0">Cacao</h4>
-          <div class="small text-muted">Statistiques agricoles-2020</div>
+          <h4 class="card-title mb-0 text-monospace">Cacao</h4>
+          <div class="text-monospace">Statistiques agricoles 1990-2020</div>
         </div><!--/.col-->
         <div class="col-sm-7 d-none d-md-block">
-          <button type="button" class="btn btn-primary float-right"><i class="icon-cloud-download"></i></button>
-          <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons">
-            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Day" id="option1">Day</label>
-            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Month" id="option2">Month</label>
-            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Year" id="option3">Year</label>
+          <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons" >
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Superficie" id="option1">Superficie</label>
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data2()"  btnRadio="Production" id="option2">Production</label>
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data3()"  btnRadio="Exportation" id="option3">Exportation</label>
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Prix" id="option4">Prix</label>
           </div>
         </div><!--/.col-->
       </div><!--/.row-->
@@ -126,7 +192,8 @@
                 [options]="mainChartOptions"
                 [colors]="mainChartColours"
                 [legend]="mainChartLegend"
-                [chartType]="mainChartType"></canvas>
+                [chartType]="mainChartType">
+        </canvas>
       </div>
     </div>
     <div class="card-footer">
@@ -170,580 +237,170 @@
     </div>
   </div>
   <!--/.card-->
-  <div class="row">
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-facebook">
-          <i class="fa fa-facebook"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-                    [datasets]="brandBoxChartData1"
-                    [labels]="brandBoxChartLabels"
-                    [options]="brandBoxChartOptions"
-                    [colors]="brandBoxChartColours"
-                    [legend]="brandBoxChartLegend"
-                    [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">89k</div>
-            <div class="text-uppercase text-muted small">friends</div>
-          </div>
-          <div>
-            <div class="text-value">459</div>
-            <div class="text-uppercase text-muted small">feeds</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-twitter">
-          <i class="fa fa-twitter"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-                    [datasets]="brandBoxChartData2"
-                    [labels]="brandBoxChartLabels"
-                    [options]="brandBoxChartOptions"
-                    [colors]="brandBoxChartColours"
-                    [legend]="brandBoxChartLegend"
-                    [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">973k</div>
-            <div class="text-uppercase text-muted small">followers</div>
-          </div>
-          <div>
-            <div class="text-value">1.792</div>
-            <div class="text-uppercase text-muted small">tweets</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-linkedin">
-          <i class="fa fa-linkedin"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-                    [datasets]="brandBoxChartData3"
-                    [labels]="brandBoxChartLabels"
-                    [options]="brandBoxChartOptions"
-                    [colors]="brandBoxChartColours"
-                    [legend]="brandBoxChartLegend"
-                    [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">500+</div>
-            <div class="text-uppercase text-muted small">contacts</div>
-          </div>
-          <div>
-            <div class="text-value">292</div>
-            <div class="text-uppercase text-muted small">feeds</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-google-plus">
-          <i class="fa fa-google-plus"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-                    [datasets]="brandBoxChartData4"
-                    [labels]="brandBoxChartLabels"
-                    [options]="brandBoxChartOptions"
-                    [colors]="brandBoxChartColours"
-                    [legend]="brandBoxChartLegend"
-                    [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">894</div>
-            <div class="text-uppercase text-muted small">followers</div>
-          </div>
-          <div>
-            <div class="text-value">92</div>
-            <div class="text-uppercase text-muted small">circles</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-  </div><!--/.row-->
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          Traffic &amp; Sales
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="callout callout-info">
-                    <small class="text-muted">New Clients</small>
-                    <br>
-                    <strong class="h4">9,123</strong>
-                  </div>
-                </div><!--/.col-->
-                <div class="col-sm-6">
-                  <div class="callout callout-danger">
-                    <small class="text-muted">Recuring Clients</small>
-                    <br>
-                    <strong class="h4">22,643</strong>
-                  </div>
-                </div><!--/.col-->
-              </div><!--/.row-->
-              <hr class="mt-0">
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Monday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 34%" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Tuesday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 94%" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Wednesday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Thursday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Friday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 73%" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Saturday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 53%" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-4">
-                <div class="progress-group-prepend">
-                  <span class="progress-group-text">
-                    Sunday
-                  </span>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 9%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 69%" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div><!--/.col-->
-            <div class="col-sm-6">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="callout callout-warning">
-                    <small class="text-muted">Pageviews</small>
-                    <br>
-                    <strong class="h4">78,623</strong>
-                  </div>
-                </div><!--/.col-->
-                <div class="col-sm-6">
-                  <div class="callout callout-success">
-                    <small class="text-muted">Organic</small>
-                    <br>
-                    <strong class="h4">49,123</strong>
-                  </div>
-                </div><!--/.col-->
-              </div><!--/.row-->
-              <hr class="mt-0">
-              <div class="progress-group">
-                <div class="progress-group-header">
-                  <i class="icon-user progress-group-icon"></i>
-                  <div>Male</div>
-                  <div class="ml-auto font-weight-bold">43%</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group mb-5">
-                <div class="progress-group-header">
-                  <i class="icon-user-female progress-group-icon"></i>
-                  <div>Female</div>
-                  <div class="ml-auto font-weight-bold">37%</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group">
-                <div class="progress-group-header align-items-end">
-                  <i class="icon-globe progress-group-icon"></i>
-                  <div>Organic Search</div>
-                  <div class="ml-auto font-weight-bold mr-2">191.235</div>
-                  <div class="text-muted small">(56%)</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group">
-                <div class="progress-group-header align-items-end">
-                  <i class="icon-social-facebook progress-group-icon"></i>
-                  <div>Facebook</div>
-                  <div class="ml-auto font-weight-bold mr-2">51.223</div>
-                  <div class="text-muted small">(15%)</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group">
-                <div class="progress-group-header align-items-end">
-                  <i class="icon-social-twitter progress-group-icon"></i>
-                  <div>Twitter</div>
-                  <div class="ml-auto font-weight-bold mr-2">37.564</div>
-                  <div class="text-muted small">(11%)</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-group">
-                <div class="progress-group-header align-items-end">
-                  <i class="icon-social-linkedin progress-group-icon"></i>
-                  <div>LinkedIn</div>
-                  <div class="ml-auto font-weight-bold mr-2">27.319</div>
-                  <div class="text-muted small">(8%)</div>
-                </div>
-                <div class="progress-group-bars">
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div><!--/.col-->
-          </div><!--/.row-->
-          <br>
-          <table class="table table-responsive-sm table-hover table-outline mb-0">
-            <thead class="thead-light">
-            <tr>
-              <th class="text-center"><i class="icon-people"></i></th>
-              <th>User</th>
-              <th class="text-center">Country</th>
-              <th>Usage</th>
-              <th class="text-center">Payment Method</th>
-              <th>Activity</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </td>
-              <td>
-                <div>Yiorgos Avraamu</div>
-                <div class="small text-muted">
-                  <span>New</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-us h4 mb-0" title="us" id="us"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>50%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-cc-mastercard" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>10 sec ago</strong>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-danger"></span>
-                </div>
-              </td>
-              <td>
-                <div>Avram Tarasios</div>
-                <div class="small text-muted">
 
-                  <span>Recurring</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-br h4 mb-0" title="br" id="br"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>10%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-cc-visa" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>5 minutes ago</strong>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-warning"></span>
-                </div>
-              </td>
-              <td>
-                <div>Quintin Ed</div>
-                <div class="small text-muted">
-                  <span>New</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-in h4 mb-0" title="in" id="in"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>74%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 74%" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-cc-stripe" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>1 hour ago</strong>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-secondary"></span>
-                </div>
-              </td>
-              <td>
-                <div>Enéas Kwadwo</div>
-                <div class="small text-muted">
-                  <span>New</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-fr h4 mb-0" title="fr" id="fr"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>98%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-danger" role="progressbar" style="width: 98%" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-paypal" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>Last month</strong>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </td>
-              <td>
-                <div>Agapetus Tadeáš</div>
-                <div class="small text-muted">
-                  <span>New</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-es h4 mb-0" title="es" id="es"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>22%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-google-wallet" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>Last week</strong>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <div class="avatar">
-                  <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-danger"></span>
-                </div>
-              </td>
-              <td>
-                <div>Friderik Dávid</div>
-                <div class="small text-muted">
-                  <span>New</span> | Registered: Jan 1, 2015
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="flag-icon flag-icon-pl h4 mb-0" title="pl" id="pl"></i>
-              </td>
-              <td>
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>43%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                  </div>
-                </div>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </td>
-              <td class="text-center">
-                <i class="fa fa-cc-amex" style="font-size:24px"></i>
-              </td>
-              <td>
-                <div class="small text-muted">Last login</div>
-                <strong>Yesterday</strong>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+
+<div class="taillien">&nbsp;<button type="button" class="btn btn-success "  (click)="onGetcacao()">Voir les  details 1990-2020...</button></div><br/>
+<div class="card" *ngIf="div3" >
+  <div class="card-header taillien">
+    Statistiques globales de la filiere Cacao au niveau nationale de 1990-2020...
+  </div>
+  <div class="card-body" >
+    <table *ngIf="toutcacao" class="table table-bordered">
+      <thead align="center">
+      <tr align="center">
+        <th>ANNEE</th>
+        <th  width="20%" align="center">TYPE PRODUIT</th>
+        <th >PRODUIT</th>
+        <th >SUPERFICIES (Ha)</th>
+        <th>PRODUCTIONS (Tonnes)</th>
+        <th>EXPORTATIONS ((Tonnes))</th>
+        <th>PRIX PRODUCTEURS (F CFA/KG)</th>
+        <th>PRIX EXPORTATION (F CFA/KG)</th>
+      </tr>
+      </thead>
+      <tbody align="center">
+      <tr *ngFor="let p of toutcacao.data">
+        <td>{{p.annee.libelle}} </td>
+        <td class="i1">{{p.produit.typeProduit.libelle}}</td>
+        <td>{{p.produit.libelle}}</td>
+        <td>{{p.superficieEstime}}</td>
+
+        <td>{{p.productionEstime}}</td>
+        <td>{{p.exportation}}</td>
+        <td>{{p.prixProducteur}}</td>
+        <td>{{p.prixExportation}}</td>
+      </tr>
+      </tbody>
+
+    </table>
+
+    <p align="right">Source: DSDI</p>
+  </div>
+
+  <div class="ctr"  *ngIf="div3">
+    &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+    <i class="icon-cloud-download">  Telecharger PDF</i></button>
+    <br/><br/>
+  </div>
+</div>
+
+
+
+
+<!--/.card-->
+  <div class="card"  #contentToConvert  >
+    <div class="card-header">
+      <strong> Récherchez les statistiques de la filiere Cacao d'une region en fonction de l'année.</strong>
+    </div>
+
+    <div>
+      <div class="card-body">
+        <div class="btn-group" dropdown>
+          <label for="cars">Région:&nbsp; &nbsp; </label>
+          <select name="cars" id="cars"  [(ngModel)]="select">
+            <option value="Marahoué">Marahoué</option>
+            <option value="N’Zi">N’Zi</option>
+            <option value="Iffou">Iffou</option>
+            <option value="Mé">Mé</option>
+            <option value="Bélier">Bélier</option>
+            <option value="Guémon">Guémon</option>
+            <option value="Moronou">Moronou</option>
+            <option value="Indénié-Djuablin">Indénié-Djuablin</option>
+            <option value="Sud-Comoé">Sud-Comoé</option>
+            <option value="Folon">Folon</option>
+            <option value="Kabadougou">Kabadougou</option>
+            <option value="Gôh">Gôh</option>
+            <option value="Lôh-Djiboua">Lôh-Djiboua</option>
+            <option value="Agnéby-Tiassa">Agnéby-Tiassa</option>
+            <option value="Grands Ponts">Grands Ponts</option>
+            <option value="Tonkpi">Tonkpi</option>
+            <option value="Mé">Mé</option>
+          </select>
+        </div>
+        <div class="btn-group" dropdown>
+          <label for="cars">&nbsp; &nbsp; &nbsp; Année:&nbsp;&nbsp;  </label>
+          <select name="cars" id="car" [(ngModel)]="select1">
+            <option value="2000">2000</option>
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2014">2014</option>
+          </select>
+        </div>
+
+        <div class="btn-group" dropdown>&nbsp; &nbsp; &nbsp;
+          <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+            <button type="button" (click)="onGetPlui()" class="btn btn-block btn-secondary">Récherchez</button>
+          </div>
         </div>
       </div>
-    </div><!--/.col-->
-  </div><!--/.row-->
+
+    </div>
+
+  </div>
+
+
+  <div class="card" *ngIf="div1" >
+    <div class="card-header">
+      REGION:  <strong>{{select}}</strong><br/>
+     Statistiques de la filiere Cacao pour l'année <strong>{{select1}}</strong>
+    </div>
+    <div class="card-body" >
+      <table *ngIf="pluies" class="table table-bordered">
+        <thead align="center">
+        <tr align="center">
+          <th>ANNEE</th>
+          <th  width="40%" align="center">LOCALITES</th>
+          <th >SUPERFICIES ESTIMEES (Ha)</th>
+          <th>PRODUCTIONS (Tonnes)</th>
+
+          <th >EXPORTATIONS (Tonnes)</th>
+          <th>PRIX PRODUCTEURS (F CFA/KG)</th>
+        </tr>
+        </thead>
+        <tbody align="center">
+        <tr *ngFor="let p of pluies.data">
+          <td>{{p.annee.libelle}} </td>
+          <td class="i1">{{p.localite.libelle}}</td>
+          <td>{{p.hauteurPluieAnnuelle}}</td>
+          <td>{{p.nbJourPluie}}</td>
+
+          <td>{{p.hauteurPluieAnnuelle}}</td>
+          <td>{{p.nbJourPluie}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p align="right">Source: DSDI</p>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="div1" >
+    <div class="card-header">
+      Statistiques de la filiere Cacao pour l'année {{select1}} de chaque localite de la region {{select}}
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper"*ngIf="pluies.data">
+        <canvas baseChart class="chart"
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+        </canvas>
+      </div>
+    </div>
+  </div>
+<div class="ctr"  *ngIf="div1">
+  &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+  <i class="icon-cloud-download">  Telecharger PDF</i></button>
+  <br/><br/>
 </div>

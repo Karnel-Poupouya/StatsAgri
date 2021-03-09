@@ -62,6 +62,7 @@ export const routes: Routes = [
 
 
 
+
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -96,10 +97,6 @@ export const routes: Routes = [
       {
         path: 'theme',
         loadChildren: () => import('./views/theme/theme.module').then(m => m.ThemeModule)
-      },
-      {
-        path: 'cacao',
-        loadChildren: () => import('./affiches/rentes/rentes/rentes.module').then(m => m.RentesModule)
       },
       {
         path: 'widgets',

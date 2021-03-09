@@ -6,6 +6,10 @@ import {Router} from "@angular/router";
 import {first} from "rxjs/operators";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { ViewChild, ElementRef } from '@angular/core';
+
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 @Component({
   templateUrl: 'colors.component.html'
@@ -26,6 +30,7 @@ export class ColorsComponent implements OnInit {
   p1_select:any=2006
 ms:any
   columns: string[] = [];
+  data1: string[] = [];
 
   ngOnInit(): void {
     this.div1=false;
@@ -136,6 +141,76 @@ ms:any
     )
   }
 */
+  generatePdf(data) {
+    html2canvas(data, { allowTaint: true }).then(canvas => {
+      let HTML_Width = canvas.width;
+      let HTML_Height = canvas.height;
+      let top_left_margin = 5;
+      let PDF_Width = HTML_Width + (top_left_margin * 2);
+      let PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+      let canvas_image_width = HTML_Width;
+      let canvas_image_height = HTML_Height;
+      let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+      canvas.getContext('2d');
 
+      let imgData = canvas.toDataURL("image/jpeg", 1.0);
+      let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+      pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage([PDF_Width, PDF_Height], 'p');
+        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+      }
+      pdf.save("pluviometrie_"+this.p_select+"_"+this.p1_select+".pdf");
+    });
+  }
+
+
+ /* onExportClick()
+  {
+    const options={
+      filename:"pluviometrie.pdf",
+      image:{type:'jpeg'},
+      html2canvas:{},
+      jsPDF:{orientation:"landscape"}
+
+    };
+    const content:Element=document.getElementById("element_to_export");
+    jsPDF(content,options)
+      .from(content)
+      .set(options)
+      .save();*/
+
+  createPdf() {
+    var doc = new jsPDF();
+
+    doc.setFontSize(10);
+    doc.text("MINISTERE DE L'AGRICULTURE", 11, 12);
+    doc.text('ET DU DEVELOPPEMENT RURAL', 11, 16);
+    doc.text('-------------------------', 23, 19);
+    doc.text("DIRECTION GENERALE DE LA ", 11, 25);
+    doc.text("PLANIFICATION, DES STATISTIQUES ", 11, 29);
+    doc.text("ET DES PROJETS", 11, 33);
+    doc.text('-------------------------', 23, 36);
+    doc.text("DIRECTION DES STATISTIQUES,", 11, 42);
+    doc.text("DE LA DOCUMENTATION ET DE ", 11, 46);
+    doc.text("L'INFORMATIQUE", 11, 50);
+    doc.text('-------------------------', 23, 53);
+    doc.text("REPUBLIQUE DE COTE D'IVOIRE ", 140, 25);
+    doc.text("Union-Discipline-Travail ", 150, 29);
+    doc.text('-----------------------', 155, 34);
+    doc.text("Abidjan, le 09 Mars 2021", 150, 50);
+    doc.text("PLUVIOMETRIE DE L'ANNEE 2006 CONCERNANT LA REGION DE LA ME", 40, 70);
+
+    (doc as any).autoTable({ html: '#tabl',
+      startY: 75,});
+    doc.text("STATISTIQUES PLUVIOMETRIQUES DE L'ANNEE 2006 CONCERNANT LA REGION DE LA ME", 24, 160);
+
+
+   let canvas = document.getElementById('cann') as HTMLCanvasElement;
+    let canvasImg = canvas.toDataURL("image/jpg", 1.0);
+    doc.addImage(canvasImg, 'JPEG', 10, 165, 190, 100 );
+
+    doc.save("pluviometrie_"+this.p_select+"_"+this.p1_select+".pdf");
+  }
 
 }
