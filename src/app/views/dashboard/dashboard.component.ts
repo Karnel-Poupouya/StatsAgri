@@ -7,11 +7,20 @@ import {Observable} from 'rxjs';
 import {first} from 'rxjs/operators';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import {DatePipe, formatDate} from '@angular/common';
+import 'jspdf-autotable';
 
 @Component({
-  templateUrl: 'dashboard.component.html'
+  templateUrl: 'dashboard.component.html',
+  providers: [DatePipe]
 })
 export class DashboardComponent implements OnInit {
+  public clicked: boolean = true;
+  public clicked1: boolean = false;
+  public clicked2: boolean = false;
+  public clicked3: boolean = false;
+  myDate:any;
+
 
   radioModel: string = 'Superficie';
 
@@ -226,15 +235,19 @@ export class DashboardComponent implements OnInit {
   public mainChartData: Array<any> = [
     {
       data: this.mainChartData1,
-      label: 'Production (Tonnes):'
+      label: 'Superficie (Ha): '
     },
     {
       data: this.mainChartData2,
-      label: 'Exportations'
+      label: 'Production (tonnes) : '
     },
     {
       data: this.mainChartData3,
-      label: 'Prix'
+      label: 'Exportation (tonnes) : '
+    },
+    {
+      data: this.mainChartData4,
+      label: 'Prix (F.CFA): '
     }
   ];
   /* tslint:disable:max-line-length */
@@ -270,8 +283,6 @@ export class DashboardComponent implements OnInit {
         ticks: {
           beginAtZero: true,
           maxTicksLimit: 5,
-          stepSize: Math.ceil(102250 / 5),
-          max: 102250
         }
       }]
     },
@@ -292,27 +303,30 @@ export class DashboardComponent implements OnInit {
   };
   public mainChartColours: Array<any> = [
     { // brandInfo
-      backgroundColor: hexToRgba(getStyle('--info'), 10),
-      borderColor: getStyle('--info'),
+      backgroundColor: hexToRgba(getStyle('--primary'), 10),
+      borderColor: getStyle('--primary'),
       pointHoverBackgroundColor: '#fff'
     },
     { // brandSuccess
-      backgroundColor: 'transparent',
+      backgroundColor: hexToRgba(getStyle('--success'), 10),
       borderColor: getStyle('--success'),
       pointHoverBackgroundColor: '#fff'
     },
     { // brandDanger
-      backgroundColor: 'transparent',
+      backgroundColor:hexToRgba(getStyle('--warning'), 10),
+      borderColor: getStyle('--warning'),
+      pointHoverBackgroundColor: '#fff',
+    },
+    { // brandDanger
+      backgroundColor:hexToRgba(getStyle('--danger'), 10),
       borderColor: getStyle('--danger'),
       pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5]
     }
   ];
   public mainChartLegend = false;
   public mainChartType = 'line';
 
-  // s
+  //
 
   public brandBoxChartColours: Array<any> = [
     {
@@ -334,8 +348,8 @@ div3:any
 //-----------------------------------------------------------------------------------------
 
 
-  constructor(private http: HttpClient,private router:Router) {
-
+  constructor(private http: HttpClient,private router:Router,private datePipe: DatePipe) {
+    this.myDate=formatDate(new Date(), 'dd MMMM YYYY', 'fr');
   }
 
 //variables
@@ -348,7 +362,6 @@ div3:any
   select2:any=2020
   ms:any
   columns: string[] = [];
-
   div1:boolean=true;
   div2:boolean=true;
 
@@ -358,7 +371,6 @@ div3:any
 
   pluviometri(): Observable<any> {
     const body = new HttpParams()
-
     return this.http.get('http://localhost:8080/pluviometrie/all?region='+this.select+'&annee='+ this.select1+''
     );
   }
@@ -367,16 +379,23 @@ div3:any
   cacaoA(): Observable<any> {
     const body = new HttpParams()
 
-    return this.http.get('http://localhost:8080/donnees/all?libProduit=Cacao&libAnnee='+this.select2+''
+    return this.http.get('http://localhost:8080/donnees/all?produit=Cacao&annee='+this.select2+''
     );
   }
 
 
 
+
+  cacaoAff(): Observable<any> {
+    const body = new HttpParams()
+    return this.http.get('http://localhost:8080/donnees/all?region='+this.select+'&annee='+ this.select1+''
+    );
+  }
+
+
   cacaoTout(): Observable<any> {
     const body = new HttpParams()
-
-    return this.http.get('http://localhost:8080/donnees/all?libProduit=Cacao'
+    return this.http.get('http://localhost:8080/donnees/all?produit=Cacao'
     );
   }
 
@@ -384,22 +403,21 @@ div3:any
 
 voirDe(){
   this.div2=true;
-}
-
-
-
+}ss
 
   onGetPlui(){
     this.div1=true;
-    this.pluviometri()
+    this.cacaoAff()
       .pipe(first()).subscribe(
       data=>{
         // console.log("reponse recu",data)
-        for ( let i=0;i<data.data.length;i++)
+        for( let i=0;i<data.data.length;i++)
         {
           this.barChartLabels[i]=data.data[i].localite.libelle
-          this.barChartData[0].data[i]=data.data[i].hauteurPluieAnnuelle
-          this.barChartData[1].data[i]=data.data[i].nbJourPluie
+          this.barChartData[0].data[i]=data.data[i].superficieEstime
+          this.barChartData[1].data[i]=data.data[i].exportation
+          this.barChartData[2].data[i]=data.data[i].productionEstime
+          this.barChartData[3].data[i]=data.data[i].prixProducteur
         }
 
         this.pluies=data
@@ -429,18 +447,11 @@ toutcacao:any
       data=>{
         // console.log("reponse recu",data)
         this.div3=true;
-        for ( let i=0;i<data.data.length;i++)
-        {
-          this.barChartLabels[i]=data.data[i].localite.libelle
-          this.barChartData[0].data[i]=data.data[i].hauteurPluieAnnuelle
-          this.barChartData[1].data[i]=data.data[i].nbJourPluie
-        }
 
         this.toutcacao=data
         if (this.toutcacao!=null)
         {
           console.log("reponse recu toutcacao",this.toutcacao)
-
         }else
         {
           console.log("pas de reponse",this.toutcacao)
@@ -459,13 +470,15 @@ toutcacao:any
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels: string[] = ['AGOU', 'ADZOPE', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: string[] = ['DEFAULT'];
   public barChartType = 'bar';
   public barChartLegend = true;
 
   public barChartData: any[] = [
-    {data: [65, 59, 80, 81, 56, 55,51, 40], label: 'Hauteur annuelle de pluie (mm)'},
-    {data: [28, 48, 40, 19, 86, 27, 25, 90], label: 'Nombre de jour de pluie /an (jours)'}
+    {data: [65], label: 'Superficie (Ha)'},
+    {data: [65], label: 'Production (Tonnes)'},
+    {data: [65], label: 'Exportation (Tonnes)'},
+    {data: [28], label: 'Prix (FCFA)'}
   ];
 
 
@@ -478,8 +491,6 @@ toutcacao:any
   public chartHovered(e: any): void {
     console.log(e);
   }
-
-
 
   selected = 'option1';
 
@@ -531,57 +542,191 @@ cacao1:any;
      )
    }
 
-  gPdf(data) {
-    html2canvas(data, { allowTaint: true }).then(canvas => {
-      let HTML_Width = canvas.width;
-      let HTML_Height = canvas.height;
-      let top_left_margin = 15;
-      let PDF_Width = HTML_Width + (top_left_margin * 2);
-      let PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
-      let canvas_image_width = HTML_Width;
-      let canvas_image_height = HTML_Height;
-      let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-      canvas.getContext('2d');
+  gPdf() {
+    var doc = new jsPDF();
+    doc.setFontSize(10);
+    doc.text("MINISTERE DE L'AGRICULTURE", 11, 12);
+    doc.text('ET DU DEVELOPPEMENT RURAL', 11, 16);
+    doc.text('-------------------------', 23, 19);
+    doc.text("DIRECTION GENERALE DE LA ", 11, 25);
+    doc.text("PLANIFICATION, DES STATISTIQUES ", 11, 29);
+    doc.text("ET DES PROJETS", 11, 33);
+    doc.text('-------------------------', 23, 36);
+    doc.text("DIRECTION DES STATISTIQUES,", 11, 42);
+    doc.text("DE LA DOCUMENTATION ET DE ", 11, 46);
+    doc.text("L'INFORMATIQUE", 11, 50);
+    doc.text('-------------------------', 23, 53);
+    doc.text("REPUBLIQUE DE COTE D'IVOIRE ", 140, 25);
+    doc.text("Union-Discipline-Travail ", 150, 29);
+    doc.text('-----------------------', 155, 34);
+    doc.text("Abidjan, le "+this.myDate, 150, 50);
+    doc.text("STATISTIQUES DE LA FILIERE CACAO DE L'ANNEE "+this.select1+" CONCERNANT LA REGION "+this.select, 40, 70);
 
-      let imgData = canvas.toDataURL("image/jpeg", 1.0);
-      let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-      pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-      for (let i = 1; i <= totalPDFPages; i++) {
-        pdf.addPage([PDF_Width, PDF_Height], 'p');
-        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
-      }
-      pdf.save("cacao_"+this.select+"_"+this.select1+".pdf");
-    });
+    (doc as any).autoTable({ html: '#tab',
+      startY: 75,});
+    doc.text("STATISTIQUES DE LA FILIERE CACAO DE L'ANNEE "+this.select1+" CONCERNANT LA REGION "+this.select, 24, 160);
+
+
+    let canvas = document.getElementById('cann') as HTMLCanvasElement;
+    let canvasImg = canvas.toDataURL("image/jpg", 1.0);
+    doc.addImage(canvasImg, 'JPEG', 10, 165, 190, 100 );
+
+    doc.save("Statistiques_Cacao_"+this.select+"_"+this.select1+".pdf");
   }
+
+
+
+
+  g1Pdf() {
+    var doc = new jsPDF();
+    doc.setFontSize(10);
+    doc.text("MINISTERE DE L'AGRICULTURE", 11, 12);
+    doc.text('ET DU DEVELOPPEMENT RURAL', 11, 16);
+    doc.text('-------------------------', 23, 19);
+    doc.text("DIRECTION GENERALE DE LA ", 11, 25);
+    doc.text("PLANIFICATION, DES STATISTIQUES ", 11, 29);
+    doc.text("ET DES PROJETS", 11, 33);
+    doc.text('-------------------------', 23, 36);
+    doc.text("DIRECTION DES STATISTIQUES,", 11, 42);
+    doc.text("DE LA DOCUMENTATION ET DE ", 11, 46);
+    doc.text("L'INFORMATIQUE", 11, 50);
+    doc.text('-------------------------', 23, 53);
+    doc.text("REPUBLIQUE DE COTE D'IVOIRE ", 140, 25);
+    doc.text("Union-Discipline-Travail ", 150, 29);
+    doc.text('-----------------------', 155, 34);
+    doc.text("Abidjan, le "+this.myDate, 150, 50);
+    doc.text("STATISTIQUES DE LA FILIERE CACAO DE L'ANNEE "+this.select1+" CONCERNANT LA REGION "+this.select, 40, 70);
+
+    (doc as any).autoTable({ html: '#tab1',
+      startY: 75,});
+
+    doc.save("Historique_cacao_"+this.select+"_"+this.select1+".pdf");
+  }
+
+
+
+
+  g2Pdf() {
+    var doc = new jsPDF();
+    doc.setFontSize(10);
+    doc.text("MINISTERE DE L'AGRICULTURE", 11, 12);
+    doc.text('ET DU DEVELOPPEMENT RURAL', 11, 16);
+    doc.text('-------------------------', 23, 19);
+    doc.text("DIRECTION GENERALE DE LA ", 11, 25);
+    doc.text("PLANIFICATION, DES STATISTIQUES ", 11, 29);
+    doc.text("ET DES PROJETS", 11, 33);
+    doc.text('-------------------------', 23, 36);
+    doc.text("DIRECTION DES STATISTIQUES,", 11, 42);
+    doc.text("DE LA DOCUMENTATION ET DE ", 11, 46);
+    doc.text("L'INFORMATIQUE", 11, 50);
+    doc.text('-------------------------', 23, 53);
+    doc.text("REPUBLIQUE DE COTE D'IVOIRE ", 140, 25);
+    doc.text("Union-Discipline-Travail ", 150, 29);
+    doc.text('-----------------------', 155, 34);
+    doc.text("Abidjan, le "+this.myDate, 150, 50);
+    doc.text("STATISTIQUES DE LA FILIERE CACAO DE L'ANNEE "+this.select1+" CONCERNANT LA REGION "+this.select, 40, 70);
+
+    (doc as any).autoTable({ html: '#tab2',
+      startY: 75,});
+
+    doc.save("cacao_"+this.select+"_"+this.select1+".pdf");
+  }
+
+
 
   ngOnInit(): void {
     // generate random values for mainChart
-    for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(10000, 102000));
       this.div1=false;
       this.div2=false;
       this.div3=false;
       this.CacaoFun();
-    }
+      this.data1();
+
     }
 
-  public data2(){
-    for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(1000, 30000));
-
-      this.mainChartData2.push(this.random(80, 100));
-      this.mainChartData3.push(65);
+  /*  public data1(){
+      for (let i = 0; i <= this.mainChartElements; i++) {
+        this.mainChartData1.push(this.random(10000, 102000));
+        //document.getElementById('option1').style.display='block';
+      }
     }
+
+     public data2(){
+      for (let i = 0; i <= this.mainChartElements; i++) {
+        this.mainChartData2.push(this.random(8000, 102000));
+      }
+    }
+
+    public data3(){
+      for (let i = 0; i <= this.mainChartElements; i++) {
+        this.mainChartData3.push(this.random(5000, 102000));
+      }
+    }
+
+   public data4(){
+      for (let i = 0; i <= this.mainChartElements; i++) {
+        this.mainChartData4.push(this.random(1000, 102000));
+      }
+    }
+  */
+  //-------------------------------------------------------------------------------------------------------
+
+  data1(){
+    this.cacaoTout()
+      .pipe(first()).subscribe(
+      data=>{
+        // console.log("reponse recu",data)
+        for ( let i=0;i<data.data.length;i++)
+        {
+          this.mainChartData1.push( data.data[i].superficieEstime );
+        }
+      },
+    )
   }
 
-  public data3(){
-    for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(1000, 30000));
-    }
+  //---------------------------------
+
+  data2(){
+    this.cacaoTout()
+      .pipe(first()).subscribe(
+      data=>{
+        // console.log("reponse recu",data)
+        for ( let i=0;i<data.data.length;i++)
+        {
+          this.mainChartData2.push( data.data[i].productionEstime );
+        }
+      },
+    )
   }
 
+  //------------
+  data3(){
+    this.cacaoTout()
+      .pipe(first()).subscribe(
+      data=>{
+        // console.log("reponse recu",data)
+        for ( let i=0;i<data.data.length;i++)
+        {
+          this.mainChartData3.push( data.data[i].exportation );
+        }
+      },
+    )
+  }
+
+  //------------
+
+
+  data4(){
+    this.cacaoTout()
+      .pipe(first()).subscribe(
+      data=>{
+        // console.log("reponse recu",data)
+        for ( let i=0;i<data.data.length;i++)
+        {
+          this.mainChartData4.push( data.data[i].prixExportation );
+        }
+      },
+    )
+  }
 
 }
-
-
-

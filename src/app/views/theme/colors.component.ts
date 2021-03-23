@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import {DatePipe, DOCUMENT} from '@angular/common';
 import { getStyle, rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities';
 import {PluviometrieService} from "../services/afficheServices/pluviometrie.service";
 import {Router} from "@angular/router";
@@ -7,22 +7,25 @@ import {first} from "rxjs/operators";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { ViewChild, ElementRef } from '@angular/core';
-
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import {formatDate} from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 @Component({
-  templateUrl: 'colors.component.html'
+  templateUrl: 'colors.component.html',
+  providers: [DatePipe]
+
 })
 export class ColorsComponent implements OnInit {
+  myDate:any
 
-  constructor(private http: HttpClient,private router:Router) {
-
+  constructor(private http: HttpClient,private router:Router,private datePipe: DatePipe) {
+    this.myDate=formatDate(new Date(), 'dd MMMM YYYY', 'fr');
   }
 
-
 //variables
-
   msg:any
   p1:any
   pluies:any
@@ -37,8 +40,6 @@ ms:any
   }
   div1:boolean=true;
 
-
-
   //-------------------------------------------------------------------------------------
 
   pluviometrie(): Observable<any> {
@@ -47,7 +48,6 @@ ms:any
     return this.http.get('http://localhost:8080/pluviometrie/all?region='+this.p_select+'&annee='+ this.p1_select+''
     );
   }
-
 
 //---------------------------------------------------------------------------------------------
 
@@ -110,15 +110,6 @@ ms:any
   }
 
 
-
-
-
-
-
-
-
-
-
  /* public pluvio(){
     this.service.pluviometrie()
       .pipe(first()).subscribe(
@@ -140,7 +131,6 @@ ms:any
       }
     )
   }
-*/
   generatePdf(data) {
     html2canvas(data, { allowTaint: true }).then(canvas => {
       let HTML_Width = canvas.width;
@@ -165,7 +155,7 @@ ms:any
   }
 
 
- /* onExportClick()
+  onExportClick()
   {
     const options={
       filename:"pluviometrie.pdf",
@@ -198,17 +188,17 @@ ms:any
     doc.text("REPUBLIQUE DE COTE D'IVOIRE ", 140, 25);
     doc.text("Union-Discipline-Travail ", 150, 29);
     doc.text('-----------------------', 155, 34);
-    doc.text("Abidjan, le 09 Mars 2021", 150, 50);
-    doc.text("PLUVIOMETRIE DE L'ANNEE 2006 CONCERNANT LA REGION DE LA ME", 40, 70);
+    doc.text("Abidjan, le "+this.myDate, 150, 50);
+    doc.text("PLUVIOMETRIE DE L'ANNEE "+this.p1_select+" CONCERNANT LA REGION "+this.p_select, 40, 70);
 
     (doc as any).autoTable({ html: '#tabl',
       startY: 75,});
-    doc.text("STATISTIQUES PLUVIOMETRIQUES DE L'ANNEE 2006 CONCERNANT LA REGION DE LA ME", 24, 160);
+    doc.text("STATISTIQUES PLUVIOMETRIQUES DE L'ANNEE "+this.p1_select+" CONCERNANT LA REGION "+this.p_select, 24, 160);
 
 
    let canvas = document.getElementById('cann') as HTMLCanvasElement;
-    let canvasImg = canvas.toDataURL("image/jpg", 1.0);
-    doc.addImage(canvasImg, 'JPEG', 10, 165, 190, 100 );
+   let canvasImg = canvas.toDataURL("image/jpg", 1.0);
+   doc.addImage(canvasImg, 'JPEG', 10, 165, 190, 100 );
 
     doc.save("pluviometrie_"+this.p_select+"_"+this.p1_select+".pdf");
   }

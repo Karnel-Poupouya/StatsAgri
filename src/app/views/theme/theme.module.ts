@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 
 import { ColorsComponent } from './colors.component';
 import { TypographyComponent } from './typography.component';
-
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 // Theme Routing
 import { ThemeRoutingModule } from './theme-routing.module';
 import { PluvioComponent } from './pluvio/pluvio.component';
@@ -24,4 +25,8 @@ import {ChartsModule} from "ng2-charts";
     PluvioComponent
   ]
 })
-export class ThemeModule { }
+export class ThemeModule {
+  constructor() {
+    registerLocaleData(localeFr, 'fr');
+}
+}

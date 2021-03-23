@@ -6,7 +6,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import {CommonModule} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 @NgModule({
   imports: [
@@ -19,4 +20,9 @@ import {CommonModule} from '@angular/common';
   ],
   declarations: [ DashboardComponent ]
 })
-export class DashboardModule { }
+export class DashboardModule {
+  constructor() {
+    registerLocaleData(localeFr, 'fr');
+  }
+
+}

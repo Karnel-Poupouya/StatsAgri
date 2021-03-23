@@ -35,6 +35,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "chart.js",
+              "chart1.js",
               "classnames",
               "core-js",
               "raf",

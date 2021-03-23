@@ -129,11 +129,11 @@
       Statistiques globales de la filiere Cacao au niveau nationale pour l'année <strong>{{select2}} </strong>
     </div>
     <div class="card-body" >
-      <table *ngIf="cacao1" class="table table-bordered">
+      <table id="tab2" *ngIf="cacao1" class="table table-bordered">
         <thead align="center">
         <tr align="center">
           <th>ANNEE</th>
-          <th  width="20%" align="center">TYPE PRODUIT</th>
+          <th  width="40%" align="center">TYPE PRODUIT</th>
           <th >PRODUIT</th>
           <th >SUPERFICIES (Ha)</th>
           <th>PRODUCTIONS (Tonnes)</th>
@@ -143,9 +143,9 @@
         </tr>
         </thead>
         <tbody align="center">
-        <tr >
+        <tr>
           <td>{{cacaoAnnee}} </td>
-          <td class="i1">{{cacaoTypeproduit}}</td>
+          <td width="40%" class="i1">{{cacaoTypeproduit}}</td>
           <td>{{cacaoprduit}}</td>
           <td>{{cacaoSuperficie}}</td>
 
@@ -162,7 +162,7 @@
     </div>
 
     <div class="ctr"  *ngIf="div2">
-      &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+      &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="g2Pdf()">
       <i class="icon-cloud-download">  Telecharger PDF</i></button>
       <br/><br/>
     </div>
@@ -178,10 +178,10 @@
         </div><!--/.col-->
         <div class="col-sm-7 d-none d-md-block">
           <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons" >
-            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Superficie" id="option1">Superficie</label>
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data1()"  btnRadio="Superficie" id="option1">Superficie</label>
             <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data2()"  btnRadio="Production" id="option2">Production</label>
             <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data3()"  btnRadio="Exportation" id="option3">Exportation</label>
-            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" btnRadio="Prix" id="option4">Prix</label>
+            <label class="btn btn-outline-secondary" [(ngModel)]="radioModel" (click)="data4()"  btnRadio="Prix" id="option4">Prix</label>
           </div>
         </div><!--/.col-->
       </div><!--/.row-->
@@ -199,38 +199,32 @@
     <div class="card-footer">
       <div class="row text-center">
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Visits</div>
-          <strong>29.703 Users (40%)</strong>
+          <div class="text-muted">Superficie totale</div>
+          <strong>1.290.703 Ha</strong>
+
           <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Unique</div>
-          <strong>24.093 Users (20%)</strong>
+          <div class="text-muted">Production totale</div>
+          <strong>124.852.093 Tonnes </strong>
           <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Pageviews</div>
-          <strong>78.706 Views (60%)</strong>
+          <div class="text-muted">Exportation totale (80%)</div>
+          <strong>78.941.706 Tonnes </strong>
           <div class="progress progress-xs mt-2">
             <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
         <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">New Users</div>
-          <strong>22.123 Users (80%)</strong>
+          <div class="text-muted">Prix Moyen (F.CFA / KG)</div>
+          <strong>950 F.CFA</strong>
           <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Bounce Rate</div>
-          <strong>40.15%</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
       </div>
@@ -240,12 +234,12 @@
 
 
 <div class="taillien">&nbsp;<button type="button" class="btn btn-success "  (click)="onGetcacao()">Voir les  details 1990-2020...</button></div><br/>
-<div class="card" *ngIf="div3" >
+<div  class="card" *ngIf="div3" >
   <div class="card-header taillien">
     Statistiques globales de la filiere Cacao au niveau nationale de 1990-2020...
   </div>
   <div class="card-body" >
-    <table *ngIf="toutcacao" class="table table-bordered">
+    <table id="tab1" *ngIf="toutcacao" class="table table-bordered">
       <thead align="center">
       <tr align="center">
         <th>ANNEE</th>
@@ -261,7 +255,7 @@
       <tbody align="center">
       <tr *ngFor="let p of toutcacao.data">
         <td>{{p.annee.libelle}} </td>
-        <td class="i1">{{p.produit.typeProduit.libelle}}</td>
+        <td width="30%" class="i1">{{p.produit.typeProduit.libelle}}</td>
         <td>{{p.produit.libelle}}</td>
         <td>{{p.superficieEstime}}</td>
 
@@ -278,7 +272,7 @@
   </div>
 
   <div class="ctr"  *ngIf="div3">
-    &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+    &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="g1Pdf()">
     <i class="icon-cloud-download">  Telecharger PDF</i></button>
     <br/><br/>
   </div>
@@ -288,7 +282,7 @@
 
 
 <!--/.card-->
-  <div class="card"  #contentToConvert  >
+  <div class="card">
     <div class="card-header">
       <strong> Récherchez les statistiques de la filiere Cacao d'une region en fonction de l'année.</strong>
     </div>
@@ -352,7 +346,7 @@
      Statistiques de la filiere Cacao pour l'année <strong>{{select1}}</strong>
     </div>
     <div class="card-body" >
-      <table *ngIf="pluies" class="table table-bordered">
+      <table id="tab" *ngIf="pluies" class="table table-bordered">
         <thead align="center">
         <tr align="center">
           <th>ANNEE</th>
@@ -367,12 +361,11 @@
         <tbody align="center">
         <tr *ngFor="let p of pluies.data">
           <td>{{p.annee.libelle}} </td>
-          <td class="i1">{{p.localite.libelle}}</td>
-          <td>{{p.hauteurPluieAnnuelle}}</td>
-          <td>{{p.nbJourPluie}}</td>
-
-          <td>{{p.hauteurPluieAnnuelle}}</td>
-          <td>{{p.nbJourPluie}}</td>
+          <td width="20%" class="i1">{{p.localite.libelle}}</td>
+          <td>{{p.superficieEstime}}</td>
+          <td>{{p.productionEstime}}</td>
+          <td>{{p.exportation}}</td>
+          <td>{{p.prixProducteur}}</td>
         </tr>
         </tbody>
       </table>
@@ -387,7 +380,7 @@
     </div>
     <div class="card-body">
       <div class="chart-wrapper"*ngIf="pluies.data">
-        <canvas baseChart class="chart"
+        <canvas id="cann" baseChart class="chart"
                 [datasets]="barChartData"
                 [labels]="barChartLabels"
                 [options]="barChartOptions"
@@ -400,7 +393,7 @@
     </div>
   </div>
 <div class="ctr"  *ngIf="div1">
-  &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf(contentToConvert)">
+  &nbsp;&nbsp;<button type="button" class="btn btn-primary " (click)="gPdf()">
   <i class="icon-cloud-download">  Telecharger PDF</i></button>
   <br/><br/>
 </div>

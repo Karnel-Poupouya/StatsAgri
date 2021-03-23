@@ -167,7 +167,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Se deconnecter',
-    url: '',
+    url: '/login',
     icon: 'icon-logout',
     variant: 'danger',
     attributes: { target: '_blank', rel: 'noopener' }
